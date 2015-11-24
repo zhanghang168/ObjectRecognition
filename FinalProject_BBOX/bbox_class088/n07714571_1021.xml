@@ -1,0 +1,20 @@
+<annotation>
+	<folder>n07714571</folder>
+	<filename>n07714571_1021</filename>
+	<source>
+		<database>ILSVRC_2013</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>769</height>
+	</size>
+	<object>
+		<name>n07714571</name>
+		<bndbox>
+			<xmin>3</xmin>
+			<xmax>786</xmax>
+			<ymin>9</ymin>
+			<ymax>736</ymax>
+		</bndbox>
+	</object>
+</annotation>

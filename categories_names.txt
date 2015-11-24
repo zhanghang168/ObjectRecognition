@@ -1,0 +1,30 @@
+
+17 basketball-1
+24 bike-2
+28 hudiejie-3
+30 bowl
+33 bus
+
+37 car-4
+43 chair
+47 keyboard-5
+54 cup-6
+58 dog-7
+
+61 drum-8
+69 dizi-9
+70 fox-10
+74 panda-11
+75 fish-12
+
+76 golf ball-13
+89 helmet-14
+96 jellyfish-15
+98 spone -16
+114 motor
+125 piano-17
+126 apnapple-18
+167 sea star-19
+197 ship-20
+
+200 zebra
