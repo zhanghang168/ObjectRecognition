@@ -1,3 +1,10 @@
+# Final Project
+*.jpg
+*.jpeg
+bounding_box/
+finalProjectData/
+FinalProject_BBOX/
+
 # Object files
 *.o
 *.ko
@@ -30,3 +37,4 @@
 
 # Debug files
 *.dSYM/
+

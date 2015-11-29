@@ -20,7 +20,7 @@ ymax=str2num(ymax1.item(0).getFirstChild.getData);
 ymin1 = xDoc.getElementsByTagName('ymin');
 ymin=str2num(ymin1.item(0).getFirstChild.getData);
 
-xy_data=[xy_data;xmin xmax ymin ymax];
+xy_data=[xy_data;xmin xmax ymin ymax]
 end
 save(['bounding_box\xy',d_name,'.mat'],'xy_data');
 end
