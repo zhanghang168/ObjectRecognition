@@ -22,7 +22,7 @@ function varargout = ProjectGUI(varargin)
 
 % Edit the above text to modify the response to help ProjectGUI
 
-% Last Modified by GUIDE v2.5 30-Nov-2015 00:50:31
+% Last Modified by GUIDE v2.5 03-Dec-2015 23:01:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -61,6 +61,8 @@ guidata(hObject, handles);
 % UIWAIT makes ProjectGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
+init();
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = ProjectGUI_OutputFcn(hObject, eventdata, handles) 
@@ -73,50 +75,49 @@ function varargout = ProjectGUI_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+% --- Executes on button press in btnTrain.
+function btnTrain_Callback(hObject, eventdata, handles)
+% hObject    handle to btnTrain (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global m;
-m = str2double(get(handles.textbox1,'String'));
-global n;
-cver = svm_test_fun(m);
-n = cver;
-set(handles.text, 'String', 'Training Finished');
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
+    global m;
+    global n;
+    m = str2double(get(handles.textbox1,'String'));
+    cver = svm_test_fun(m);
+    n = cver;
+    set(handles.text, 'String', 'Training Finished');
+
+% --- Executes on button press in btnTesting.
+function btnTesting_Callback(hObject, eventdata, handles)
+% hObject    handle to btnTesting (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global n;
-global m;
-
-global obj;
-global Big_sift;
-%m = 18;
-ry = zeros(1,8);
-num=0;
-for i = 1:8
-label = predict(obj,double(Big_sift((m*(i-1)+1):m*i,:)));
-labeln = label';
-for j = 1:m
-if labeln(j) == i;
-    num = num+1;
-else
-end
-ry(i) = num/m;
-end
-num =0;
-
-end
-set(handles.text, 'String', n);
-Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum'};
-x = 1:8;
-%y = [0.8, 0.7, 0.6, 0.8];
-axes(handles.axes1)
-bar(x,ry)
-set(gca, 'XTick', 1:8, 'XTickLabel', Labels);
+    global n;
+    global m;
+    global obj;
+    global Big_sift;
+    
+    %m = 18;
+    ry = zeros(1,8);
+    num=0;
+    for i = 1:8
+        label = predict(obj,double(Big_sift((m*(i-1)+1):m*i,:)));
+        labeln = label';
+        for j = 1:m
+            if labeln(j) == i;
+                num = num+1;
+            end
+            ry(i) = num/m;
+        end
+        num =0;
+    end
+    set(handles.text, 'String', n);
+    Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum'};
+    x = 1:8;
+    %y = [0.8, 0.7, 0.6, 0.8];
+    axes(handles.axes1)
+    bar(x,ry)
+    set(gca, 'XTick', 1:8, 'XTickLabel', Labels);
 
 
 function textbox1_Callback(hObject, eventdata, handles)
@@ -169,22 +170,22 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global m;
-charac={'017','024','028','037','047','054','058','061','069','070','074','075','076','089','096','098','125','162','167','197'};%the 49th one in the 033 data loss.
-n = str2double(get(handles.textbox2,'String'));
-if mod(n, m)== 0
-    k = n/m;
-    i = m;
-else
-    k = floor(n/m + 1);
-    i = mod(n, m);
-end
+    global m;
+    charac={'017','024','028','037','047','054','058','061','069','070','074','075','076','089','096','098','125','162','167','197'};%the 49th one in the 033 data loss.
+    n = str2double(get(handles.textbox2,'String'));
+    if mod(n, m)== 0
+        k = n/m;
+        i = m;
+    else
+        k = floor(n/m + 1);
+        i = mod(n, m);
+    end
 
-d_name = char(charac(k));
-xfiles=dir(['finalProjectData\class',d_name,'\*.jpeg']);
-I = imread(['finalProjectData\class',d_name,'\',xfiles(i).name]);
-axes(handles.axes2)
-imshow(I);
+    d_name = char(charac(k));
+    xfiles=dir(['finalProjectData\class',d_name,'\*.jpeg']);
+    I = imread(['finalProjectData\class',d_name,'\',xfiles(i).name]);
+    axes(handles.axes2)
+    imshow(I);
 
 
 % --- Executes on button press in pushbutton4.
@@ -192,52 +193,52 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global obj;
-global Big_sift;
-n = str2double(get(handles.textbox2,'String'));
-label = predict(obj,double(Big_sift(n,:)));
-if label == 1
-    output ='Basketball';
-elseif label == 2
-    output ='Bike';
-elseif label == 3
-    output ='Hudiejie';
-elseif label == 4
-    output ='car';
-elseif label == 5
-    output ='Keyboard';
-elseif label == 6
-    output ='Cup';
-elseif label == 7
-    output ='Dog';
-elseif label == 8
-    output ='Drum';
-elseif label == 9
-    output ='Dizi';
-elseif label == 10
-    output ='Fox';
-elseif label == 11
-    output ='Panda';
-elseif label == 12
-    output ='Fish';
-elseif label == 13
-    output ='Golf Ball';
-elseif label == 14
-    output ='Helmet';
-elseif label == 15
-    output ='Jelly Fish';
-elseif label == 16
-    output ='Spone';
-elseif label == 17
-    output ='Piano';
-elseif label == 18
-    output ='Apnapple';
-elseif label == 19
-    output ='Sea Star';
-elseif label == 20
-    output ='Ship';
-else
-    output = 'Not recognized';
-end
-disp(label);
-set(handles.text, 'String', output);
+    global obj;
+    global Big_sift;
+    n = str2double(get(handles.textbox2,'String'));
+    label = predict(obj,double(Big_sift(n,:)));
+    if label == 1
+        output ='Basketball';
+    elseif label == 2
+        output ='Bike';
+    elseif label == 3
+        output ='Hudiejie';
+    elseif label == 4
+        output ='car';
+    elseif label == 5
+        output ='Keyboard';
+    elseif label == 6
+        output ='Cup';
+    elseif label == 7
+        output ='Dog';
+    elseif label == 8
+        output ='Drum';
+    elseif label == 9
+        output ='Dizi';
+    elseif label == 10
+        output ='Fox';
+    elseif label == 11
+        output ='Panda';
+    elseif label == 12
+        output ='Fish';
+    elseif label == 13
+        output ='Golf Ball';
+    elseif label == 14
+        output ='Helmet';
+    elseif label == 15
+        output ='Jelly Fish';
+    elseif label == 16
+        output ='Spone';
+    elseif label == 17
+        output ='Piano';
+    elseif label == 18
+        output ='Apnapple';
+    elseif label == 19
+        output ='Sea Star';
+    elseif label == 20
+        output ='Ship';
+    else
+        output = 'Not recognized';
+    end
+    disp(label);
+    set(handles.text, 'String', output);
