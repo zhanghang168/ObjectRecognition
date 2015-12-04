@@ -1,7 +1,11 @@
 # Final Project
 *.jpg
 *.jpeg
+*.asv
 bounding_box/
+sift_features/
+vlfeat-0.9.20/
+libsvm-3.20/
 finalProjectData/
 FinalProject_BBOX/
 
