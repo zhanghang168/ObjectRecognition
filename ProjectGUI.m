@@ -22,7 +22,7 @@ function varargout = ProjectGUI(varargin)
 
 % Edit the above text to modify the response to help ProjectGUI
 
-% Last Modified by GUIDE v2.5 03-Dec-2015 21:35:27
+% Last Modified by GUIDE v2.5 03-Dec-2015 23:54:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -91,9 +91,9 @@ function btnTrain_Callback(hObject, eventdata, handles)
 %
     set(handles.text, 'String', 'Training Finished');
 
-% --- Executes on button press in btnTesting.
-function btnTesting_Callback(hObject, eventdata, handles)
-% hObject    handle to btnTesting (see GCBO)
+% --- Executes on button press in btnTest.
+function btnTest_Callback(hObject, eventdata, handles)
+% hObject    handle to btnTest (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
     global n;
@@ -102,10 +102,10 @@ function btnTesting_Callback(hObject, eventdata, handles)
     global Big_sift;
     
     %m = 18;
-Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum','Dizi','Fox','Panda','Fish','Golfball','Helmet','Jellyfish','Spone','Piano','Apnap','SeaStar','Ship'};
-ry = zeros(1,20);
+    Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum','Dizi','Fox','Panda','Fish','Golfball','Helmet','Jellyfish','Spone','Piano','Apnap','SeaStar','Ship'};
+    ry = zeros(1,20);
     num=0;
-for i = 1:20
+    for i = 1:20
         label = predict(obj,double(Big_sift((m*(i-1)+1):m*i,:)));
         labeln = label';
         for j = 1:m
@@ -116,16 +116,16 @@ for i = 1:20
         end
         num =0;
     end
-%word = 'Cross Validation Error = '+ n;
+    %word = 'Cross Validation Error = '+ n;
     set(handles.text, 'String', n);
-Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum','Dizi','Fox','Panda','Fish','Golfball','Helmet','Jellyfish','Spone','Piano','Apnap','SeaStar','Ship'};
-x = 1:20;
+    Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum','Dizi','Fox','Panda','Fish','Golfball','Helmet','Jellyfish','Spone','Piano','Apnap','SeaStar','Ship'};
+    x = 1:20;
     %y = [0.8, 0.7, 0.6, 0.8];
     axes(handles.axes1)
     bar(x,ry)
-ylabel('Accuracy in Percentage')
-set(gca, 'XTick', 1:20, 'XTickLabel', Labels);
-set(handles.uitable1,'data',ry(1:20)');
+    ylabel('Accuracy in Percentage')
+    set(gca, 'XTick', 1:20, 'XTickLabel', Labels);
+    set(handles.uitable1,'data',ry(1:20)');
 
 
 function textbox1_Callback(hObject, eventdata, handles)
@@ -173,9 +173,9 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton3.
-function pushbutton3_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton3 (see GCBO)
+% --- Executes on button press in btnShowImg.
+function btnShowImg_Callback(hObject, eventdata, handles)
+% hObject    handle to btnShowImg (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
     global m;
@@ -205,9 +205,9 @@ if mod(n, 100)== 0
     imshow(I);
 
 
-% --- Executes on button press in pushbutton4.
-function pushbutton4_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton4 (see GCBO)
+% --- Executes on button press in btnTestImg.
+function btnTestImg_Callback(hObject, eventdata, handles)
+% hObject    handle to btnTestImg (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
     global obj;
