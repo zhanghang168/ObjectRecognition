@@ -22,7 +22,7 @@ function varargout = ProjectGUI(varargin)
 
 % Edit the above text to modify the response to help ProjectGUI
 
-% Last Modified by GUIDE v2.5 03-Dec-2015 23:01:23
+% Last Modified by GUIDE v2.5 03-Dec-2015 21:35:27
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -85,6 +85,10 @@ function btnTrain_Callback(hObject, eventdata, handles)
     m = str2double(get(handles.textbox1,'String'));
     cver = svm_test_fun(m);
     n = cver;
+%load('1.mat');
+%label=obj.predict([]);%
+%labelstr=numtostr(label);
+%
     set(handles.text, 'String', 'Training Finished');
 
 % --- Executes on button press in btnTesting.
@@ -98,9 +102,10 @@ function btnTesting_Callback(hObject, eventdata, handles)
     global Big_sift;
     
     %m = 18;
-    ry = zeros(1,8);
+Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum','Dizi','Fox','Panda','Fish','Golfball','Helmet','Jellyfish','Spone','Piano','Apnap','SeaStar','Ship'};
+ry = zeros(1,20);
     num=0;
-    for i = 1:8
+for i = 1:20
         label = predict(obj,double(Big_sift((m*(i-1)+1):m*i,:)));
         labeln = label';
         for j = 1:m
@@ -111,13 +116,16 @@ function btnTesting_Callback(hObject, eventdata, handles)
         end
         num =0;
     end
+%word = 'Cross Validation Error = '+ n;
     set(handles.text, 'String', n);
-    Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum'};
-    x = 1:8;
+Labels = {'Basketball', 'Bike', 'Hudiejie','Car','Keyboard', 'Cup', 'Dog','Drum','Dizi','Fox','Panda','Fish','Golfball','Helmet','Jellyfish','Spone','Piano','Apnap','SeaStar','Ship'};
+x = 1:20;
     %y = [0.8, 0.7, 0.6, 0.8];
     axes(handles.axes1)
     bar(x,ry)
-    set(gca, 'XTick', 1:8, 'XTickLabel', Labels);
+ylabel('Accuracy in Percentage')
+set(gca, 'XTick', 1:20, 'XTickLabel', Labels);
+set(handles.uitable1,'data',ry(1:20)');
 
 
 function textbox1_Callback(hObject, eventdata, handles)
@@ -173,12 +181,21 @@ function pushbutton3_Callback(hObject, eventdata, handles)
     global m;
     charac={'017','024','028','037','047','054','058','061','069','070','074','075','076','089','096','098','125','162','167','197'};%the 49th one in the 033 data loss.
     n = str2double(get(handles.textbox2,'String'));
-    if mod(n, m)== 0
-        k = n/m;
-        i = m;
+% if mod(n, m)== 0
+%     k = n/m;
+%     i = m;
+% else
+%     k = floor(n/m + 1);
+%     i = mod(n, m);
+% end
+
+
+if mod(n, 100)== 0
+    k = n/100;
+    i = 100;
     else
-        k = floor(n/m + 1);
-        i = mod(n, m);
+    k = floor(n/100 + 1);
+    i = mod(n, 100);
     end
 
     d_name = char(charac(k));
@@ -242,3 +259,26 @@ function pushbutton4_Callback(hObject, eventdata, handles)
     end
     disp(label);
     set(handles.text, 'String', output);
+
+
+% --- Executes on selection change in listbox1.
+function listbox1_Callback(hObject, eventdata, handles)
+% hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox1
+
+
+% --- Executes during object creation, after setting all properties.
+function listbox1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
